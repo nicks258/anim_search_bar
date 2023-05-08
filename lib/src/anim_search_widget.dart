@@ -24,6 +24,8 @@ class AnimSearchBar extends StatefulWidget {
 
   final double width;
   final double height;
+  final double? containerHeight;
+  final double? containerWidth;
   final TextEditingController textController;
   final Icon? suffixIcon;
   final Icon? prefixIcon;
@@ -54,7 +56,8 @@ class AnimSearchBar extends StatefulWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.helpText = "Search...",
-    
+    this.containerHeight = 32,
+    this.containerWidth =32,
     /// Height of wrapper container
     this.height = 100,
     
@@ -137,8 +140,8 @@ class _AnimSearchBarState extends State<AnimSearchBar>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.height,
-
+      height: widget.containerHeight,
+      width: widget.containerWidth,
       ///if the rtl is true, search bar will be from right to left
       alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),
 
