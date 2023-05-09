@@ -136,11 +136,13 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: widget.animationDurationInMilli),
       height: widget.height,
-
+      width: toggle==0?widget.height: widget.width,
+      // decoration: BoxDecoration(borderRadius: BorderRadius.circular(32),color: Colors.black),
       ///if the rtl is true, search bar will be from right to left
-      alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),
+      alignment: Alignment.center,
 
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(
@@ -245,7 +247,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
               duration: Duration(milliseconds: widget.animationDurationInMilli),
               left: (toggle == 0) ? 20.0 : 40.0,
               curve: Curves.easeOut,
-              top: 7.0,
+              top: 6.0,
 
               ///Using Animated opacity to change the opacity of th textField while expanding
               child: AnimatedOpacity(
@@ -311,7 +313,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
             ///Using material widget here to get the ripple effect on the prefix icon
             IconButton(
-              splashRadius: 19.0,
+              // splashRadius: 8.0,
 
               ///if toggle is 1, which means it's open. so show the back icon, which will close it.
               ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
@@ -330,7 +332,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                       color: toggle == 0
                           ? widget.searchIconColor
                           : widget.textFieldIconColor,
-                      size: 20.0,
+                      size: 18.0,
                     ),
               onPressed: () {
                 setState(
