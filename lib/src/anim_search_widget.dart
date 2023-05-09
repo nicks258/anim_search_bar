@@ -144,6 +144,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(
+
         duration: Duration(milliseconds: widget.animationDurationInMilli),
         height: widget.height,
         width: (toggle == 0) ? 48.0 : widget.width,
@@ -170,14 +171,15 @@ class _AnimSearchBarState extends State<AnimSearchBar>
             ///Using Animated Positioned widget to expand and shrink the widget
             AnimatedPositioned(
               duration: Duration(milliseconds: widget.animationDurationInMilli),
-              top: 6.0,
+              top: 7.0,
               right: 7.0,
               curve: Curves.easeOut,
               child: AnimatedOpacity(
                 opacity: (toggle == 0) ? 0.0 : 1.0,
                 duration: Duration(milliseconds: 200),
                 child: Container(
-                  padding: EdgeInsets.all(8.0),
+                  // alignment: Alignment.centerRight,
+                  // padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     /// can add custom color or the color will be white
                     color: widget.color,
@@ -243,15 +245,16 @@ class _AnimSearchBarState extends State<AnimSearchBar>
               duration: Duration(milliseconds: widget.animationDurationInMilli),
               left: (toggle == 0) ? 20.0 : 40.0,
               curve: Curves.easeOut,
-              top: 11.0,
+              top: 7.0,
 
               ///Using Animated opacity to change the opacity of th textField while expanding
               child: AnimatedOpacity(
                 opacity: (toggle == 0) ? 0.0 : 1.0,
                 duration: Duration(milliseconds: 200),
                 child: Container(
+
                   padding: const EdgeInsets.only(left: 10),
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.center,
                   width: widget.width / 1.7,
                   child: TextField(
                     ///Text Controller. you can manipulate the text inside this textField by calling this controller.
@@ -307,64 +310,59 @@ class _AnimSearchBarState extends State<AnimSearchBar>
             ),
 
             ///Using material widget here to get the ripple effect on the prefix icon
-            Material(
-              /// can add custom color or the color will be white
-              /// toggle button color based on toggle state
-              color: toggle == 0 ? widget.color : widget.textFieldColor,
-              borderRadius: BorderRadius.circular(30.0),
-              child: IconButton(
-                splashRadius: 19.0,
+            IconButton(
+              splashRadius: 19.0,
 
-                ///if toggle is 1, which means it's open. so show the back icon, which will close it.
-                ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
-                ///prefixIcon is of type Icon
-                icon: widget.prefixIcon != null
-                    ? toggle == 1
-                        ? Icon(
-                            Icons.arrow_back_ios,
-                            color: widget.textFieldIconColor,
-                          )
-                        : widget.prefixIcon!
-                    : Icon(
-                        toggle == 1 ? Icons.arrow_back_ios : Icons.search,
-                        // search icon color when closed
-                        color: toggle == 0
-                            ? widget.searchIconColor
-                            : widget.textFieldIconColor,
-                        size: 20.0,
-                      ),
-                onPressed: () {
-                  setState(
-                    () {
-                      ///if the search bar is closed
-                      if (toggle == 0) {
-                        toggle = 1;
-                        setState(() {
-                          ///if the autoFocus is true, the keyboard will pop open, automatically
-                          if (widget.autoFocus)
-                            FocusScope.of(context).requestFocus(focusNode);
-                        });
+              ///if toggle is 1, which means it's open. so show the back icon, which will close it.
+              ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
+              ///prefixIcon is of type Icon
+              icon: widget.prefixIcon != null
+                  ? toggle == 1
+                      ? Icon(
+                          Icons.arrow_back_ios,
+                          color: widget.textFieldIconColor,
+                size: 20,
+                        )
+                      : widget.prefixIcon!
+                  : Icon(
+                      toggle == 1 ? Icons.arrow_back_ios : Icons.search,
+                      // search icon color when closed
+                      color: toggle == 0
+                          ? widget.searchIconColor
+                          : widget.textFieldIconColor,
+                      size: 20.0,
+                    ),
+              onPressed: () {
+                setState(
+                  () {
+                    ///if the search bar is closed
+                    if (toggle == 0) {
+                      toggle = 1;
+                      setState(() {
+                        ///if the autoFocus is true, the keyboard will pop open, automatically
+                        if (widget.autoFocus)
+                          FocusScope.of(context).requestFocus(focusNode);
+                      });
 
-                        ///forward == expand
-                        _con.forward();
-                      } else {
-                        ///if the search bar is expanded
-                        toggle = 0;
+                      ///forward == expand
+                      _con.forward();
+                    } else {
+                      ///if the search bar is expanded
+                      toggle = 0;
 
-                        ///if the autoFocus is true, the keyboard will close, automatically
-                        setState(() {
-                          if (widget.autoFocus) unfocusKeyboard();
-                        });
+                      ///if the autoFocus is true, the keyboard will close, automatically
+                      setState(() {
+                        if (widget.autoFocus) unfocusKeyboard();
+                      });
 
-                        ///reverse == close
-                        _con.reverse();
-                      }
-                    },
+                      ///reverse == close
+                      _con.reverse();
+                    }
+                  },
 
-                  );
-                  widget.searchBarOpen(toggle);
-                },
-              ),
+                );
+                widget.searchBarOpen(toggle);
+              },
             ),
           ],
         ),
